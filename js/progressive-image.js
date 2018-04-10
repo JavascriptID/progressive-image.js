@@ -1,4 +1,4 @@
-// progressive-image.js, v1.1
+// progressive-image.js, v1.2
 // by Craig Buckler, @craigbuckler
 if (window.addEventListener && window.requestAnimationFrame && document.getElementsByClassName) window.addEventListener('load', function() {
 
@@ -89,16 +89,19 @@ if (window.addEventListener && window.requestAnimationFrame && document.getEleme
           item.addEventListener('click', function(e) { e.preventDefault(); }, false);
         }
 
+        // preview image
+        var pImg = item.querySelector && item.querySelector('img.preview');
+
         // add full image
-        item.appendChild(img).addEventListener('animationend', function(e) {
+        item.insertBefore(img, pImg && pImg.nextSibling).addEventListener('animationend', function() {
 
           // remove preview image
-          var pImg = item.querySelector && item.querySelector('img.preview');
           if (pImg) {
-            e.target.alt = pImg.alt || '';
+            img.alt = pImg.alt || '';
             item.removeChild(pImg);
-            e.target.classList.remove('reveal');
           }
+
+          img.classList.remove('reveal');
 
         });
 
